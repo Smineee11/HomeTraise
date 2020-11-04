@@ -9,12 +9,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/item1"
-        android:tag="1"
-        android:onClick="displaygrid">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/item1"
+    android:tag="1"
+    android:onClick="displaygrid">
 
         <TextView
             android:layout_width="wrap_content"

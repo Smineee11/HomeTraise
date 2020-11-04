@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation = "vertical">
+    android:orientation = "vertical"
+    tools:context=".character_detail">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text = "이름"
+            android:text = "Name"
             android:textSize = "15sp"
             android:gravity="center"
             android:layout_weight="1"
@@ -26,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text = "포인트"
+            android:text = "Point"
             android:textSize = "15sp"
             android:gravity="center"
             android:layout_weight="1"
@@ -107,10 +108,10 @@
             android:textSize="35sp"
             android:textStyle="bold"
             android:background="#ffffff"
-            android:onClick="clickExercise"
+            android:onClick="convert_to_grid"
+            android:id="@+id/bt1"
+            android:tag="1"
             style="?android:attr/borderlessButtonStyle"
             />
-
     </LinearLayout>
-
 </LinearLayout>
