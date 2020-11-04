@@ -10,7 +10,7 @@ public class gridNextPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grid_next_page);
+        setContentView(R.layout.exercise_detail);
         Intent intent = getIntent();
 
     }
