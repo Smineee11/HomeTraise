@@ -101,17 +101,77 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50">
+        android:layout_weight="50"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/edittext_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="여기에 개수를 입력"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/button_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="개수 더하기" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GOAL"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="100dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_shape"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/circle_progress_bar" />
+
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -183,7 +243,6 @@
             </Button>
 
         </LinearLayout>
-
     </LinearLayout>
 
 
