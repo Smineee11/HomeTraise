@@ -13,12 +13,15 @@
         <activity android:name=".character_detail"></activity>
         <activity android:name=".grid"></activity>
         <activity android:name=".gridNextPage"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Calorie">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
 
         </activity>
     </application>
