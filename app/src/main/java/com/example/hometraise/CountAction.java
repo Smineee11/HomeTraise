@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CountAction extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView progressText;
+    private TextView goaltext;
     int i=1;
 
     EditText eText;
@@ -30,7 +31,7 @@ public class CountAction extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progress_bar);
         progressText= findViewById(R.id.progress_text);
-
+        goaltext= (TextView)findViewById(R.id.goal);
         eText = (EditText)findViewById(R.id.edittext_progressbar);
        // eText.setText("EditText 사용하기");
         btn = (Button)findViewById(R.id.button_progressbar);
@@ -38,6 +39,7 @@ public class CountAction extends AppCompatActivity {
             public void onClick(View v){
                 String str = eText.getText().toString();
                 goal = Integer.parseInt(str);
+                goaltext.setText(String.valueOf(goal));
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
