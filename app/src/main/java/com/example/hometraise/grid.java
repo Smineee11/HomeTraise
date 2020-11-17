@@ -35,7 +35,7 @@ public class grid extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = names[position];
                 int selectedImage = images[position];
-                Toast.makeText(grid.this, " " +position, Toast.LENGTH_LONG).show();
+                Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     startActivity(new Intent(grid.this, gridNextPage.class).putExtra("name", selectedName).putExtra("image", selectedImage));
                 }
