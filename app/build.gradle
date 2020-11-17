@@ -33,4 +33,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:26.0.0')  // firebase
     implementation 'com.google.firebase:firebase-analytics' // firebase
+    implementation 'com.dinuscxj:circleprogressbar:1.3.0' // CircleProgressBar
 }
