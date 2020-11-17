@@ -7,6 +7,20 @@
     android:orientation="vertical"
     tools:context = ".CountAction">
 
+    <EditText
+        android:id = "@+id/edittext_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint = "여기에 개수를 입력"
+        android:inputType="text"/>
+
+    <Button
+        android:id = "@+id/button_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "개수 더하기"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
