@@ -1,7 +1,5 @@
 package com.example.hometraise;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,14 +10,15 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class grid extends AppCompatActivity {
     GridView gridView;
     String[] names = {"squat", "lunge", "add", "add", "add", "add"};
-    int[] images ={R.drawable.squat, R.drawable.lunge, R.drawable.add, R.drawable.add, R.drawable.add, R.drawable.add};
+    int[] images ={R.drawable.squat, R.drawable.lunge, R.drawable.add2, R.drawable.add2, R.drawable.add2, R.drawable.add2};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class grid extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = names[position];
                 int selectedImage = images[position];
-                Toast.makeText(grid.this, " " +position, Toast.LENGTH_LONG).show();
+                Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     startActivity(new Intent(grid.this, gridNextPage.class).putExtra("name", selectedName).putExtra("image", selectedImage));
                 }
