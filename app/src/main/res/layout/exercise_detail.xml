@@ -105,8 +105,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="50"
+        android:layout_height="50dp"
+        android:layout_weight="30"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -142,9 +142,10 @@
 
         <RelativeLayout
             android:id="@+id/progress_layout"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="100dp">
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="0dp">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
