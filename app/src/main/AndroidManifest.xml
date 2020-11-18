@@ -10,26 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".character_detail"></activity>
-
-        <activity android:name=".grid">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Calorie">
-
-        </activity>
+        <activity android:name=".grid"></activity>
+        <activity android:name=".Calorie"></activity>
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
-
-<!--        <activity android:name=".CustomDialog">-->
-<!--        </activity>-->
-
-
     </application>
 
 </manifest>
