@@ -28,7 +28,7 @@
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="16dp"
-        android:hint="목표설정"/>
+        android:hint="한 번에 목표는 최대 100까지 가능합니다."/>
 
 
     <View

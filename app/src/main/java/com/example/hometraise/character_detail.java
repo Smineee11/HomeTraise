@@ -14,11 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.ValueEventListener;
 
 public class character_detail extends AppCompatActivity {
 
@@ -33,27 +33,27 @@ public class character_detail extends AppCompatActivity {
         nameText.setText(name);
 
         // firebase - query point and clothes and set textView
-        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(name);
-
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                CharacterData data = snapshot.getValue(CharacterData.class);
-
-                if(data == null)
-                    System.out.println("Undefined user");
-
-                else {
-                    TextView pointText = (TextView)findViewById(R.id.textview_point);
-                    pointText.setText(Integer.toString(data.point));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("The read failed: ", error.getMessage());
-            }
-        });
+//        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(name);
+//
+//        dbRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                CharacterData data = snapshot.getValue(CharacterData.class);
+//
+//                if(data == null)
+//                    System.out.println("Undefined user");
+//
+//                else {
+//                    TextView pointText = (TextView)findViewById(R.id.textview_point);
+//                    pointText.setText(Integer.toString(data.point));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("The read failed: ", error.getMessage());
+//            }
+//        });
 
     }
 
