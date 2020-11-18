@@ -9,10 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CountAction"></activity>
         <activity android:name=".character_detail"></activity>
         <activity android:name=".grid"></activity>
-        <activity android:name=".gridNextPage"></activity>
         <activity android:name=".Calorie">
 
         </activity>
