@@ -1,5 +1,10 @@
 package com.example.hometraise;
 
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +12,9 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +34,23 @@ public class Calorie extends AppCompatActivity {
 
     private long baseTime,pauseTime;
 
+    private TextView count;
+    private TextView goaltext;
+    private SensorManager sensorManager;
+    private float acceleration;
+    private float previousZ, currentZ;
+    private int  squats=0;
+
+    private ProgressBar progressBar;
+    private TextView progressText;
+    int i=1;
+
+    int num=0;
+    int goal = 10;
+    int flag;
+    int squats_progress=0;
+    int total_count=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +64,18 @@ public class Calorie extends AppCompatActivity {
 
         stopButton.setOnClickListener(onClickListener);
         restartButton.setOnClickListener(onClickListener);
+
+        Intent intent = getIntent();
+        count = (TextView) findViewById(R.id.count);
+        previousZ = currentZ = squats = 0;
+        acceleration = 0.0f;
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager.registerListener(stepDetector, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressText= findViewById(R.id.progress_text);
+        goaltext= (TextView)findViewById(R.id.goal);
+        // eText.setText("EditText 사용하기");
 
     }
 
@@ -55,6 +92,73 @@ public class Calorie extends AppCompatActivity {
         }
     };
 
+    private SensorEventListener stepDetector = new SensorEventListener() {
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+
+            if (status == RUN) {
+                if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+
+                    float z = event.values[2];
+                    currentZ = z;
+
+                    if (flag == 0 && currentZ > 14) {
+                        // 1/2 이벤트발생!!
+                        flag++;
+                        previousZ = currentZ;
+                    }
+                    else if (flag == 1 && currentZ < 6) {
+
+                        flag = 0;
+                        squats++;
+                        total_count++;
+                        count.setText(String.valueOf(total_count));
+
+                        if (squats_progress <= 100) {
+                            progressText.setText(String.valueOf(squats));
+                            if (squats == goal) {
+                                squats_progress = 100;
+                                progressBar.setProgress(squats_progress);
+                                //팝업
+                                recButton();
+                            }
+                            else {
+                                squats_progress = squats_progress + 100 / goal; //실수 처리 필요!
+                                progressBar.setProgress(squats_progress);
+                            }
+
+
+//                        Handler handler1 = new Handler();
+//                        handler1.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if(squats_progress<=100){
+//                                    progressText.setText(String.valueOf(squats));
+//                                    squats_progress = squats_progress+100/goal; //실수 처리 필요!
+//                                    progressBar.setProgress(squats_progress);
+//
+//
+//
+//                                }
+//                                else{
+//                                    handler.removeCallbacks(this);
+//                                }
+//                            }
+//                        },200);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
     private void staButton(){
         switch (status){
             case INIT:
@@ -63,7 +167,6 @@ public class Calorie extends AppCompatActivity {
 
                 handler.sendEmptyMessage(0);
                 stopButton.setText("STOP");
-                restartButton.setEnabled(true);
 
                 status = RUN;
                 break;
@@ -74,6 +177,8 @@ public class Calorie extends AppCompatActivity {
 
                 stopButton.setText("START");
                 restartButton.setText("RESTART");
+                restartButton.setEnabled(true);
+
 
                 status = PAUSE;
                 break;
@@ -84,6 +189,8 @@ public class Calorie extends AppCompatActivity {
                 handler.sendEmptyMessage(0);
 
                 stopButton.setText("STOP");
+                restartButton.setEnabled(false);
+
 
                 status = RUN;
 
@@ -95,10 +202,15 @@ public class Calorie extends AppCompatActivity {
         restartButton.setText("RESTART");
         restartButton.setEnabled(false);
 
-        timer.setText("0.0");
+        timer.setText("00:00");
 
         baseTime = 0;
         pauseTime = 0;
+
+        progressText.setText("0");
+        progressBar.setProgress(0);
+        squats = 0;
+        squats_progress = 0;
 
         status = INIT;
     }
