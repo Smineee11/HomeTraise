@@ -13,7 +13,7 @@
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="16dp"
-        android:text="커스텀 다이얼로그"
+        android:text="목표설정"
         android:background="@color/colorAccent"/>
 
     <View
