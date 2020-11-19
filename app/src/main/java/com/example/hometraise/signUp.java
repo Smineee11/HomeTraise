@@ -1,6 +1,7 @@
 package com.example.hometraise;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +30,7 @@ public class signUp extends AppCompatActivity {
     EditText text_height;
     EditText text_weight;
     String id;
-    final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+    final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
     boolean canSignUp = false;
 
     @Override
@@ -70,7 +71,7 @@ public class signUp extends AppCompatActivity {
             public void onClick(View v) {
                 id = text_id.getText().toString();
 
-                dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                dbRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -107,13 +108,23 @@ public class signUp extends AppCompatActivity {
                     String height = text_height.getText().toString();
                     double weight = Double.parseDouble(text_weight.getText().toString());
 
+                    // Users에 데이터 삽입
                     UserData data = new UserData(name, age, height, weight);    // 삽입할 데이터
                     Map<String, Object> childData = data.toMap();
-                    dbRef.child(id).setValue(childData);
+                    dbRef.child("Users").child(id).setValue(childData);
 
-                    // 다음 페이지
-                    Intent intent = new Intent(getApplicationContext(), character_detail.class);
-                    intent.putExtra("id", id);
+                    // Characters에 데이터 삽입
+                    CharacterData data_char = new CharacterData(name, 0, 0);
+                    Map<String, Object> childData_char = data_char.toMap();
+                    dbRef.child("Characters").child(id).setValue(childData_char);
+
+                    SharedPreferences pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("id", id);
+                    editor.commit();
+
+                    // 다시 처음페이지로 되돌아감
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
                 else

@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="시작하기"
             android:layout_weight="1"
-            android:id="@+id/item1"
+            android:id="@+id/start"
             android:tag="1"
             android:onClick="displaygrid"/>
 
