@@ -23,17 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 public class character_detail extends AppCompatActivity {
 
     Button button;
-    String name = "babo";
+    String id = "ID";
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.characterdetail);
         Intent it = getIntent();
-        TextView nameText = (TextView)findViewById(R.id.textview_name);
-        nameText.setText(name);
 
         // firebase - query point and clothes and set textView
-        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(name);
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
 
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -44,6 +42,8 @@ public class character_detail extends AppCompatActivity {
                     System.out.println("Undefined user");
 
                 else {
+                    TextView nameText = (TextView)findViewById(R.id.textview_name);
+                    nameText.setText(data.name);
                     TextView pointText = (TextView)findViewById(R.id.textview_point);
                     pointText.setText(Integer.toString(data.point));
                 }

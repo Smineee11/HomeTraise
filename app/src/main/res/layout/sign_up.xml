@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Sign Up"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/signUp_id"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signUp_id"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="2dp"
+        android:hint="ID"
+        app:layout_constraintBottom_toTopOf="@+id/signUp_name"
+        app:layout_constraintEnd_toStartOf="@+id/button_id"
+        app:layout_constraintStart_toStartOf="@+id/signUp_age" />
+
+    <Button
+        android:id="@+id/button_id"
+        android:text="확인"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/signUp_id"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/signUp_name"
+        android:hint="이름"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/signUp_age"
+        app:layout_constraintEnd_toEndOf="@+id/signUp_age"
+        app:layout_constraintStart_toStartOf="@+id/signUp_age" />
+
+    <EditText
+        android:id="@+id/signUp_age"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:hint="나이"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signUp_height"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="키"
+        app:layout_constraintEnd_toEndOf="@+id/signUp_age"
+        app:layout_constraintStart_toStartOf="@+id/signUp_age"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_age"
+        tools:ignore="InvalidId" />
+
+    <EditText
+        android:id="@+id/signUp_weight"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="몸무게"
+        app:layout_constraintEnd_toEndOf="@+id/signUp_height"
+        app:layout_constraintStart_toStartOf="@+id/signUp_height"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_height"
+        tools:ignore="InvalidId" />
+
+    <Button
+        android:id="@+id/signUp_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="회원가입"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_weight" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
