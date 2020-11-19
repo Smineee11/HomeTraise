@@ -11,12 +11,15 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Calorie extends AppCompatActivity {
@@ -46,7 +49,7 @@ public class Calorie extends AppCompatActivity {
     int i=1;
 
     int num=0;
-    int goal = 10;
+    int goal = 0;
     int flag;
     int squats_progress=0;
     int total_count=0;
@@ -66,6 +69,7 @@ public class Calorie extends AppCompatActivity {
         restartButton.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
+
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
         acceleration = 0.0f;
@@ -74,10 +78,26 @@ public class Calorie extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progress_bar);
         progressText= findViewById(R.id.progress_text);
-        goaltext= (TextView)findViewById(R.id.goal);
+        goaltext= (TextView)findViewById(R.id.goal); //커스텀 다이얼로그에서 값 받아와서 값 띄우기
         // eText.setText("EditText 사용하기");
+        CustomDialog customDialog = new CustomDialog(this);
+        customDialog.show();
+        customDialog.setDialogListener(new CustomDialog.CustomDialogListener() {
+            @Override
+            public void onOkClicked(String goal_count) {
+                goaltext.setText(goal_count);
+                goal = Integer.parseInt(goal_count);
+            }
+
+            @Override
+            public void onCancelClicked() {
+
+            }
+        });
+
 
     }
+
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -213,6 +233,21 @@ public class Calorie extends AppCompatActivity {
         squats_progress = 0;
 
         status = INIT;
+        CustomDialog dialog = new CustomDialog(this);
+        dialog.show();
+        dialog.setDialogListener(new CustomDialog.CustomDialogListener() {
+            @Override
+            public void onOkClicked(String goal_count) {
+                goaltext.setText(goal_count);
+                goal = Integer.parseInt(goal_count);
+            }
+
+            @Override
+            public void onCancelClicked() {
+
+            }
+        });
+
     }
 
     private String getTime(){
