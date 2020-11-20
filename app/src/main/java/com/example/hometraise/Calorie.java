@@ -30,7 +30,9 @@ public class Calorie extends AppCompatActivity {
     private TextView timer, calorie;
     private Button stopButton, restartButton;
     private Context context;
-    private double kg = 75;
+
+    //임의로 설정해둔 칼로리 계산 변수
+   private double kg = 55;
     private double MET = 8;
 
     public static final int INIT = 0;   //처음
@@ -259,11 +261,24 @@ public class Calorie extends AppCompatActivity {
         return recTime;
     }
 
+    private long getMinute(){
+        long nowTime = SystemClock.elapsedRealtime();
+        long overTime = nowTime - baseTime;
+
+        long m = overTime/1000/60;
+
+        return m;
+    }
+
     Handler handler = new Handler(){
 
         @Override
         public void handleMessage(@NonNull Message msg) {
             timer.setText((getTime()));
+            long minute = getMinute();
+            double result = 0.0175 * kg * MET * minute;
+            String cal = String.format("%.0f",result);
+            calorie.setText(cal);
 
             handler.sendEmptyMessage(0);
         }
