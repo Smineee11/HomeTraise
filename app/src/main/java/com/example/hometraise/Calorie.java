@@ -1,5 +1,6 @@
 package com.example.hometraise;
 
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -26,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Calorie extends AppCompatActivity {
     private TextView timer, calorie;
     private Button stopButton, restartButton;
-
+    private Context context;
     private double kg = 75;
     private double MET = 8;
 
@@ -72,7 +73,7 @@ public class Calorie extends AppCompatActivity {
         restartButton.setOnClickListener(onClickListener);
 
         Intent intent = getIntent();
-
+        this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
         acceleration = 0.0f;
@@ -83,7 +84,7 @@ public class Calorie extends AppCompatActivity {
         progressText= findViewById(R.id.progress_text);
         goaltext= (TextView)findViewById(R.id.goal); //커스텀 다이얼로그에서 값 받아와서 값 띄우기
         // eText.setText("EditText 사용하기");
-        CustomDialog customDialog = new CustomDialog(this);
+        final CustomDialog customDialog = new CustomDialog(this);
         customDialog.show();
         customDialog.setDialogListener(new CustomDialog.CustomDialogListener() {
             @Override
@@ -94,6 +95,8 @@ public class Calorie extends AppCompatActivity {
 
             @Override
             public void onCancelClicked() {
+                Intent intent = new Intent(Calorie.this, grid.class);
+                startActivity(intent);
 
             }
         });
