@@ -77,8 +77,10 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
                 break;
             case R.id.cancelButton:
-                cancel();
+                customDialogListener.onCancelClicked();
+                dismiss();
                 break;
+
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
