@@ -236,6 +236,7 @@ public class Calorie extends AppCompatActivity {
         squats_progress = 0;
 
         status = INIT;
+
         CustomDialog dialog = new CustomDialog(this);
         dialog.show();
         dialog.setDialogListener(new CustomDialog.CustomDialogListener() {
