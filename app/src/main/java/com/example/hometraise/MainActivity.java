@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Button startButton, makenewButton;
 
+    // 첫 화면에서 뒤로가기 버튼 클릭 시 종료되는 현상 막기
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
