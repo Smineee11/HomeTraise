@@ -11,10 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="#000"
         android:textSize="16dp"
-        android:text="목표설정"
-        android:background="@color/colorAccent"/>
+        android:text="목표설정" />
 
     <View
         android:layout_width="match_parent"
