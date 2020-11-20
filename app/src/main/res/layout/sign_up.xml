@@ -84,9 +84,11 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="회원가입"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_weight" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp_weight"
+        android:background="@drawable/custom_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

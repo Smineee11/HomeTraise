@@ -8,35 +8,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="time"
                 android:textSize="20sp"
-                android:gravity="center"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="00:00"
                 android:textSize="40sp"
-                android:gravity="center"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
 
         </LinearLayout>
@@ -51,9 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="count"
                 android:textSize="20sp"
-                android:gravity="center"
                 android:textStyle="bold">
 
             </TextView>
@@ -63,11 +61,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="0"
                 android:textSize="40sp"
-                android:gravity="center"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
         </LinearLayout>
 
@@ -82,9 +79,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="calorie"
                 android:textSize="20sp"
-                android:gravity="center"
                 android:textStyle="bold">
 
             </TextView>
@@ -94,11 +91,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="0"
                 android:textSize="40sp"
-                android:gravity="center"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
         </LinearLayout>
 
@@ -107,10 +103,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -132,14 +127,16 @@
         <RelativeLayout
             android:id="@+id/progress_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="100dp">
+            android:layout_height="350dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="350dp"
                 android:background="@drawable/circle_shape"
                 android:indeterminate="false"
                 android:progressDrawable="@drawable/circle_progress_bar" />
@@ -171,30 +168,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="coin"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textStyle="bold">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="CAMERA">
 
-            </TextView>
-
-            <TextView
-                android:id="@+id/coin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="0"
-                android:textSize="50sp"
-                android:gravity="center"
-                android:textStyle="bold">
-            </TextView>
+        </Button>
 
         </LinearLayout>
 
