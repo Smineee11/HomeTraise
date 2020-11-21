@@ -47,21 +47,20 @@ public class MainActivity extends AppCompatActivity {
         final String id = pref.getString("id", null);
 
         if(id == null) {    // do not have id
-            startButton.setEnabled(false);
-            makenewButton.setEnabled(true);
+            idtext.setText("");
+            nametext.setText("");
+            startButton.setText("Sign in");
         }
         else {  // id exists
-            startButton.setEnabled(true);
-            makenewButton.setEnabled(false);
-
+            startButton.setText("Start");
             idtext.setText("ID: " + id);
 
-            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
 
-            dbRef.addValueEventListener(new ValueEventListener() {
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    CharacterData data = snapshot.getValue(CharacterData.class);
+                    UserData data = snapshot.getValue(UserData.class);
 
                     if(data == null)
                         System.out.println("Undefined user");
@@ -98,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     //인텐트 처리
-    public  void displaygrid(View v) {
+    public void displaygrid(View v) {
         Intent it = new Intent(this, character_detail.class);
         startActivity(it);
     }
-
-
 }
