@@ -111,6 +111,7 @@
         android:orientation="horizontal"
         >
         <Button
+            android:id="@+id/shop_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -120,9 +121,11 @@
             android:textStyle="bold"
             android:background="#ffffff"
             android:onClick="clickShop"
+            android:tag="2"
             style="?android:attr/borderlessButtonStyle"
             />
         <Button
+            android:id="@+id/bt1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -132,9 +135,7 @@
             android:textStyle="bold"
             android:background="#ffffff"
             android:onClick="convert_to_grid"
-            android:id="@+id/bt1"
             android:tag="1"
-            style="?android:attr/borderlessButtonStyle"
-            />
+            style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
 </LinearLayout>
