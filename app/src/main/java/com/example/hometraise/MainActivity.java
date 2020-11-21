@@ -2,14 +2,20 @@ package com.example.hometraise;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,18 +30,26 @@ public class MainActivity extends AppCompatActivity {
 
     private Button startButton, makenewButton;
 
-    // 첫 화면에서 뒤로가기 버튼 클릭 시 종료되는 현상 막기
+    androidx.appcompat.widget.Toolbar toolbar;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
     }
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
 
         idtext = (TextView)findViewById(R.id.main_myid);
         nametext = (TextView)findViewById(R.id.main_myname);
@@ -97,6 +111,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.setting_menu,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       switch (item.getItemId()){
+           case R.id.logout:
+               Toast.makeText(this, "My Info", Toast.LENGTH_SHORT).show();
+               return true;
+
+           case R.id.myaccount:
+               Toast.makeText(this, "Link Account", Toast.LENGTH_SHORT).show();
+               return true;
+           default:
+               return super.onOptionsItemSelected(item);
+       }
+    }
+
 
     //인텐트 처리
     public  void displaygrid(View v) {

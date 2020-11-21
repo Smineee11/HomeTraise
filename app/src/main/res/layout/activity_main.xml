@@ -8,23 +8,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = ""/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/imageView3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:background="@drawable/small_setting"
-            android:layout_weight="0.1"
-            app:srcCompat="@drawable/small_setting"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"/>
-
-
 
         <ImageView
             android:layout_width="wrap_content"
