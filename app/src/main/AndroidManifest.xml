@@ -13,6 +13,7 @@
         <activity android:name=".character_detail"></activity>
         <activity android:name=".grid"></activity>
         <activity android:name=".Calorie"></activity>
+        <activity android:name=".Store"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
