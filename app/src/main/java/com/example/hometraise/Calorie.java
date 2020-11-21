@@ -59,7 +59,7 @@ public class Calorie extends AppCompatActivity {
     int flag;
     int squats_progress=0;
     int total_count=0;
-
+    int max, min =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,10 @@ public class Calorie extends AppCompatActivity {
         stopButton.setOnClickListener(onClickListener);
         restartButton.setOnClickListener(onClickListener);
 
+        //Intent intent = getIntent();
         Intent intent = getIntent();
+        max =  intent.getIntExtra("max", 1);
+        min =  intent.getIntExtra("min", 1);
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
@@ -135,13 +138,14 @@ public class Calorie extends AppCompatActivity {
                     float z = event.values[2];
                     currentZ = z;
 
-                    if (flag == 0 && currentZ > 14) {
+                    if (flag == 0 && currentZ > max) {
                         // 1/2 이벤트발생!!
+                        Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
                         flag++;
                         previousZ = currentZ;
                     }
-                    else if (flag == 1 && currentZ < 6) {
-
+                    else if (flag == 1 && currentZ < min) {
+                        Toast.makeText(Calorie.this, "min: "+min, Toast.LENGTH_SHORT).show();
                         flag = 0;
                         squats++;
                         total_count++;
