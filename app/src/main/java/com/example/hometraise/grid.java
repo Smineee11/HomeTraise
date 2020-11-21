@@ -38,9 +38,20 @@ public class grid extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = names[position];
                 int selectedImage = images[position];
+
                 Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
-                    startActivity(new Intent(grid.this, Calorie.class).putExtra("name", selectedName).putExtra("image", selectedImage));
+                    Intent intent = new Intent(grid.this, Calorie.class);
+                    intent.putExtra("max", 14);
+                    intent.putExtra("min", 7);
+                    startActivity(intent);
+
+                }
+                else if(position == 1) {
+                    Intent intent = new Intent(grid.this, Calorie.class);
+                    intent.putExtra("max", 9);
+                    intent.putExtra("min", 6);
+                    startActivity(intent);
                 }
             }
             });
