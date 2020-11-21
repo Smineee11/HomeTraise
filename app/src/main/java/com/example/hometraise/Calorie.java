@@ -24,11 +24,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
 public class Calorie extends AppCompatActivity {
     private TextView timer, calorie;
     private Button stopButton, restartButton;
     private Context context;
-    private double kg = 75;
+
+    //임의로 설정해둔 칼로리 계산 변수
+   private double kg = 55;
     private double MET = 8;
 
     public static final int INIT = 0;   //처음
@@ -55,6 +59,7 @@ public class Calorie extends AppCompatActivity {
     int flag;
     int squats_progress=0;
     int total_count=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +100,10 @@ public class Calorie extends AppCompatActivity {
 
             @Override
             public void onCancelClicked() {
-                Intent intent = new Intent(Calorie.this, grid.class);
-                startActivity(intent);
-
+//                Intent intent = new Intent(Calorie.this, grid.class);
+//                startActivity(intent);
+//                onBackPressed();
+                finish();
             }
         });
 
@@ -155,23 +161,6 @@ public class Calorie extends AppCompatActivity {
                             }
 
 
-//                        Handler handler1 = new Handler();
-//                        handler1.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if(squats_progress<=100){
-//                                    progressText.setText(String.valueOf(squats));
-//                                    squats_progress = squats_progress+100/goal; //실수 처리 필요!
-//                                    progressBar.setProgress(squats_progress);
-//
-//
-//
-//                                }
-//                                else{
-//                                    handler.removeCallbacks(this);
-//                                }
-//                            }
-//                        },200);
                         }
 
                     }
@@ -272,11 +261,24 @@ public class Calorie extends AppCompatActivity {
         return recTime;
     }
 
+    private long getMinute(){
+        long nowTime = SystemClock.elapsedRealtime();
+        long overTime = nowTime - baseTime;
+
+        long m = overTime/1000/60;
+
+        return m;
+    }
+
     Handler handler = new Handler(){
 
         @Override
         public void handleMessage(@NonNull Message msg) {
             timer.setText((getTime()));
+            long minute = getMinute();
+            double result = 0.0175 * kg * MET * minute;
+            String cal = String.format("%.0f",result);
+            calorie.setText(cal);
 
             handler.sendEmptyMessage(0);
         }

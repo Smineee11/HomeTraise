@@ -23,6 +23,12 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
     private CustomDialogListener customDialogListener;
 
+    //뒤로가기 버튼 방지
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     public CustomDialog(Context context){
         super(context);
         this.context = context;
@@ -40,6 +46,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_dialog);
+        setCancelable(false);
         //init
         Ok = (Button)findViewById(R.id.okbutton);
         Cancel=(Button)findViewById(R.id.cancelButton);
