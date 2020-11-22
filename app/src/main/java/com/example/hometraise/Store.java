@@ -41,14 +41,14 @@ public class Store extends AppCompatActivity {
 
                 Toast.makeText(Store.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
-                    Intent intent = new Intent(Store.this, Calorie.class);
+                    Intent intent = new Intent(Store.this, Purchase.class);
                     intent.putExtra("name", selectedName);
                     intent.putExtra("image", selectedImage);
                     startActivity(intent);
 
                 }
                 else if(position == 1) {
-                    Intent intent = new Intent(Store.this, Calorie.class);
+                    Intent intent = new Intent(Store.this, Purchase.class);
                     intent.putExtra("name", selectedName);
                     intent.putExtra("image", selectedImage);
                     startActivity(intent);
