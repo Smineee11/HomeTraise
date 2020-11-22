@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "864182407071",
+    "firebase_url": "https://hometraise.firebaseio.com",
+    "project_id": "hometraise",
+    "storage_bucket": "hometraise.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864182407071:android:411fa9857e034405acb7aa",
+        "android_client_info": {
+          "package_name": "com.example.hometraise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864182407071-unb923mgda1bkc5b6pl6gk80hfcmgn90.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hometraise",
+            "certificate_hash": "8c12fb3c020ab612215a49355bc7d7fb236f197f"
+          }
+        },
+        {
+          "client_id": "864182407071-h1u81b0rtramhstfrbgg5suhanajme7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoh5Qs4RwZIFcTl7tc7bijbI5tUf04xBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864182407071-h1u81b0rtramhstfrbgg5suhanajme7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
