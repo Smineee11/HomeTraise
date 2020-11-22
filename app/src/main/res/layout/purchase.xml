@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:text="Would you like to buy new character?"
+        android:textSize="35dp"
+        android:textColor="#000"
+        android:layout_margin="35dp"
+        android:gravity="center">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <ImageView
+            android:id="@+id/purchase_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/c_basic">
+
+        </ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
+
+            <Button
+                android:id="@+id/purchase_ok"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="puschase"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:background="#ffffff">
+            </Button>
+
+
+            <Button
+                android:id="@+id/purchase_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="cancle"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:background="#ffffff">
+            </Button>
+
+
+    </LinearLayout>
+
+</LinearLayout>
