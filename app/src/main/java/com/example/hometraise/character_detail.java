@@ -64,12 +64,19 @@ public class character_detail extends AppCompatActivity {
     }
     public void clickShop(View v){
         Toast.makeText(this,"상점클릭", Toast.LENGTH_SHORT).show();
+        int id = v.getId();
+        Button button = (Button)v.findViewById(id);
+        String tag = (String)button.getTag();
+
+        Intent it = new Intent(this, Store.class);
+        it.putExtra("it_tag", tag);
+        startActivity(it);
     }
 
     public void convert_to_grid(View v) {
         int id = v.getId();
         Button button= (Button)v.findViewById(id);
-        String tag = (String) button.getTag();
+        String tag = (String)button.getTag();
 
         Toast.makeText(this, tag, Toast.LENGTH_LONG);
         Intent it = new Intent(this, grid.class);

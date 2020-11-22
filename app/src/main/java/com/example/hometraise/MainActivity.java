@@ -61,21 +61,24 @@ public class MainActivity extends AppCompatActivity {
         final String id = pref.getString("id", null);
 
         if(id == null) {    // do not have id
-            startButton.setEnabled(false);
-            makenewButton.setEnabled(true);
+            idtext.setText("");
+            nametext.setText("");
+            startButton.setText("Sign in");
+
+            signIn();
         }
         else {  // id exists
-            startButton.setEnabled(true);
-            makenewButton.setEnabled(false);
-
+            startButton.setText("Start");
             idtext.setText("ID: " + id);
 
-            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+            start(id);
 
-            dbRef.addValueEventListener(new ValueEventListener() {
+            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    CharacterData data = snapshot.getValue(CharacterData.class);
+                    UserData data = snapshot.getValue(UserData.class);
 
                     if(data == null)
                         System.out.println("Undefined user");
@@ -92,16 +95,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), character_detail.class);
-                intent.putExtra("id", id);
-                System.out.println(id);
-                startActivity(intent);
-            }
-        });
-
         makenewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,14 +105,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void start(final String myId) { // 운동 시작
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), character_detail.class);
+                intent.putExtra("id", myId);
+                System.out.println(myId);
+                startActivity(intent);
+            }
+        });
+    }
 
+    void signIn() { // 구글 계정으로 로그인
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.setting_menu,menu);
-        return true;
 
+        return true;
     }
 
     @Override
@@ -136,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                return super.onOptionsItemSelected(item);
        }
     }
-
 
     //인텐트 처리
     public  void displaygrid(View v) {

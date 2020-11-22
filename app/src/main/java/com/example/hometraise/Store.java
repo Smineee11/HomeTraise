@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,54 +17,53 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class grid extends AppCompatActivity {
-    GridView gridView;
-    String[] names = {"squat", "lunge", "add", "add", "add", "add"};
-    int[] images ={R.drawable.squat, R.drawable.lunge, R.drawable.add2, R.drawable.add2, R.drawable.add2, R.drawable.add2};
+public class Store extends AppCompatActivity {
+    GridView gridview;
+    Button closet;
+    String[] names = {"c_basic","basic_2"};
+    int[] images = new int[]{R.drawable.c_basic, R.drawable.ic_launcher_background };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.exercise_list);
-        //인텐트 처리 필요
-        gridView = findViewById(R.id.gridView);
-        Intent it = getIntent();
-        CustomAdapter customAdapter = new CustomAdapter(names, images, this);
-        gridView.setAdapter(customAdapter);
+        setContentView(R.layout.store_detail);
+        closet = (Button)findViewById(R.id.closet_button);
+        gridview = findViewById(R.id.gridView);
+        //Intent it = getIntent();
+        CustomAdapter2 customAdapter = new CustomAdapter2(names, images, this);
+        gridview.setAdapter(customAdapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedName = names[position];
                 int selectedImage = images[position];
 
-                Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Store.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
-                    Intent intent = new Intent(grid.this, Calorie.class);
-                    intent.putExtra("max", 14);
-                    intent.putExtra("min", 7);
+                    Intent intent = new Intent(Store.this, Purchase.class);
+                    intent.putExtra("name", selectedName);
+                    intent.putExtra("image", selectedImage);
                     startActivity(intent);
 
                 }
                 else if(position == 1) {
-                    Intent intent = new Intent(grid.this, Calorie.class);
-                    intent.putExtra("max", 9);
-                    intent.putExtra("min", 6);
+                    Intent intent = new Intent(Store.this, Purchase.class);
+                    intent.putExtra("name", selectedName);
+                    intent.putExtra("image", selectedImage);
                     startActivity(intent);
                 }
             }
-            });
+        });
     }
 
-    public class CustomAdapter extends BaseAdapter {
+    public class CustomAdapter2 extends BaseAdapter {
         private String[] imageNames;
         private  int[] imagePhoto;
         private Context context;
         private LayoutInflater layoutInflater;
 
-        public CustomAdapter(String[] imageNames, int[] imagePhoto, Context context) {
+        public CustomAdapter2(String[] imageNames, int[] imagePhoto, Context context) {
             this.imageNames = imageNames;
             this.imagePhoto = imagePhoto;
             this.context = context;
@@ -87,18 +87,20 @@ public class grid extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if(convertView == null){
-                convertView =layoutInflater.inflate(R.layout.exercise_row_items, parent, false);
+                convertView =layoutInflater.inflate(R.layout.store_row_items, parent, false);
             }
 
-            TextView tvName = convertView.findViewById(R.id.tvName);
+            TextView itemName = convertView.findViewById(R.id.itemName);
             ImageView imageView  = convertView.findViewById(R.id.imageView);
 
 
-            tvName.setText(imageNames[position]);
+            itemName.setText(imageNames[position]);
             imageView.setImageResource(imagePhoto[position]);
             return convertView;
         }
 
     }
-
 }
+
+
+

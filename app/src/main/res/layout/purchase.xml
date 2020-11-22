@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/purchase_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/c_basic">
+
+        </ImageView>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:text="Would you like to buy \nnew character?"
+        android:textSize="30dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:gravity="center">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/purchase_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PRICE: 500pt"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="center_horizontal">
+        </TextView>
+
+        <TextView
+            android:id="@+id/purchase_mypoint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="MY POINT:"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="">
+
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.8"
+        android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/purchase_ok"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="purchase"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:onClick="purchaseClicked"
+                android:background="#ffffff">
+            </Button>
+
+
+            <Button
+                android:id="@+id/purchase_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="cancle"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:onClick="cancelClicked"
+                android:background="#ffffff">
+            </Button>
+
+
+    </LinearLayout>
+
+</LinearLayout>
