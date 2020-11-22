@@ -32,6 +32,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Map;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Calorie extends AppCompatActivity {
     private TextView timer, calorie;
@@ -72,10 +77,42 @@ public class Calorie extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     private DatabaseReference mDatabase;
 
+
+
     public void onBackPressed() {
         //super.onBackPressed();
-        // firebase - query point and clothes and set textView
-         mDatabase = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                CharacterData data = snapshot.getValue(CharacterData.class);
+                Log.d("NAME ", data.name);
+                Log.d("POINT ", String.valueOf(data.point));
+
+                if(data == null)
+                    System.out.println("Undefined user");
+
+                else {
+                    data.point = data.point + total_count;
+
+                    Log.d("CHANGE ", String.valueOf(data.point));
+                }
+
+                String key = dbRef.child("Characters").push().getKey();
+                CharacterData newdata = new CharacterData(data.name, data.point, data.clothes);
+                Map<String, Object> newdataValues = newdata.toMap();
+
+                dbRef.setValue(newdataValues);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("The read failed: ", error.getMessage());
+            }
+        });
+
 
         finish();
     }
@@ -107,7 +144,6 @@ public class Calorie extends AppCompatActivity {
         acceleration = 0.0f;
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(stepDetector, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-
 
         progressBar = findViewById(R.id.progress_bar);
         progressText= findViewById(R.id.progress_text);
