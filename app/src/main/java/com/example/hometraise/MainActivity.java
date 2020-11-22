@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
 
-            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            dbRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserData data = snapshot.getValue(UserData.class);
@@ -137,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
        switch (item.getItemId()){
-           case R.id.logout:
-               Toast.makeText(this, "My Info", Toast.LENGTH_SHORT).show();
+           case R.id.myinfo:
+               Intent info_intent = new Intent(this, ChangeMyInfo.class);
+               info_intent.putExtra("info","1");
+               startActivity(info_intent);
                return true;
 
            case R.id.myaccount:
@@ -147,12 +149,6 @@ public class MainActivity extends AppCompatActivity {
            default:
                return super.onOptionsItemSelected(item);
        }
-    }
-
-    //인텐트 처리
-    public  void displaygrid(View v) {
-        Intent it = new Intent(this, character_detail.class);
-        startActivity(it);
     }
 
 
