@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/puchase_price"
+            android:id="@+id/purchase_price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="PRICE: 500pt"
@@ -53,7 +53,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/puchase_mypoint"
+            android:id="@+id/purchase_mypoint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="MY POINT:"
@@ -77,10 +77,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="puschase"
+                android:text="purchase"
                 android:layout_gravity="center_vertical"
                 android:textSize="35sp"
                 android:textStyle="bold"
+                android:onClick="purchaseClicked"
                 android:background="#ffffff">
             </Button>
 
@@ -94,6 +95,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="35sp"
                 android:textStyle="bold"
+                android:onClick="cancelClicked"
                 android:background="#ffffff">
             </Button>
 
