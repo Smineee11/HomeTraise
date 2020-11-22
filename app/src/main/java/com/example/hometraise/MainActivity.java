@@ -136,10 +136,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       switch (item.getItemId()){
+
+        SharedPreferences pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        final String id = pref.getString("id", null);
+
+        switch (item.getItemId()){
            case R.id.myinfo:
                Intent info_intent = new Intent(this, ChangeMyInfo.class);
-               info_intent.putExtra("info","1");
+               info_intent.putExtra("info_id",id);
                startActivity(info_intent);
                return true;
 

@@ -22,6 +22,7 @@
 
 
     <TextView
+        android:id = "@+id/title_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text = "My Information"
@@ -57,6 +58,7 @@
 
 
      <TextView
+         android:id = "@+id/id_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text = "디비에서 받아온 아이디"
