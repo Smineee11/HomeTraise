@@ -79,8 +79,7 @@
             android:minWidth="300dp"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:tag="1"
-            android:onClick="displaygrid"/>
+            android:tag="1" />
 
 
         <Button

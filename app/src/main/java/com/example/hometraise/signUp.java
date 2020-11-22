@@ -29,7 +29,7 @@ public class signUp extends AppCompatActivity {
     EditText text_age;
     EditText text_height;
     EditText text_weight;
-    String id;
+    String id = null;
     final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
     boolean canSignUp = false;
 
@@ -70,6 +70,7 @@ public class signUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 id = text_id.getText().toString();
+
 
                 dbRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
 

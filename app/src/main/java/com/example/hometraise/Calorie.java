@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,6 +25,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Calorie extends AppCompatActivity {
@@ -60,6 +66,18 @@ public class Calorie extends AppCompatActivity {
     int squats_progress=0;
     int total_count=0;
     int max, min =0;
+    String id;
+    int mypoint = 0;
+
+    private DatabaseReference mDatabase;
+
+    public void onBackPressed() {
+        //super.onBackPressed();
+        // firebase - query point and clothes and set textView
+         mDatabase = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +95,11 @@ public class Calorie extends AppCompatActivity {
         stopButton.setOnClickListener(onClickListener);
         restartButton.setOnClickListener(onClickListener);
 
-        //Intent intent = getIntent();
         Intent intent = getIntent();
         max =  intent.getIntExtra("max", 1);
         min =  intent.getIntExtra("min", 1);
+        id = intent.getExtras().getString("id");
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
@@ -145,7 +164,7 @@ public class Calorie extends AppCompatActivity {
                         previousZ = currentZ;
                     }
                     else if (flag == 1 && currentZ < min) {
-                        Toast.makeText(Calorie.this, "min: "+min, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Calorie.this, "min: "+min, Toast.LENGTH_SHORT).show();
                         flag = 0;
                         squats++;
                         total_count++;

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
 
-            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            dbRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserData data = snapshot.getValue(UserData.class);
@@ -147,12 +147,6 @@ public class MainActivity extends AppCompatActivity {
            default:
                return super.onOptionsItemSelected(item);
        }
-    }
-
-    //인텐트 처리
-    public  void displaygrid(View v) {
-        Intent it = new Intent(this, character_detail.class);
-        startActivity(it);
     }
 
 

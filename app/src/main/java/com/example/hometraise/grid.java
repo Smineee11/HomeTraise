@@ -20,6 +20,7 @@ public class grid extends AppCompatActivity {
     GridView gridView;
     String[] names = {"squat", "lunge", "add", "add", "add", "add"};
     int[] images ={R.drawable.squat, R.drawable.lunge, R.drawable.add2, R.drawable.add2, R.drawable.add2, R.drawable.add2};
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class grid extends AppCompatActivity {
         //인텐트 처리 필요
         gridView = findViewById(R.id.gridView);
         Intent it = getIntent();
+        userid = it.getExtras().getString("id");
+        Toast.makeText(this, userid, Toast.LENGTH_SHORT).show();
         CustomAdapter customAdapter = new CustomAdapter(names, images, this);
         gridView.setAdapter(customAdapter);
 
@@ -44,6 +47,7 @@ public class grid extends AppCompatActivity {
                     Intent intent = new Intent(grid.this, Calorie.class);
                     intent.putExtra("max", 14);
                     intent.putExtra("min", 7);
+                    intent.putExtra("id", userid);
                     startActivity(intent);
 
                 }
@@ -51,6 +55,7 @@ public class grid extends AppCompatActivity {
                     Intent intent = new Intent(grid.this, Calorie.class);
                     intent.putExtra("max", 9);
                     intent.putExtra("min", 6);
+                    intent.putExtra("id", userid);
                     startActivity(intent);
                 }
             }
