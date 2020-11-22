@@ -1,5 +1,6 @@
 package com.example.hometraise;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +18,9 @@ public class ChangeMyInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_myinfo);
 
+        Intent info_intent = getIntent();
+
         Button switch_button = (Button)findViewById(R.id.button_change);
-
-
         switch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
