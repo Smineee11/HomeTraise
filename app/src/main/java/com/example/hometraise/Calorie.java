@@ -6,10 +6,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,6 +26,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Calorie extends AppCompatActivity {
@@ -60,6 +67,18 @@ public class Calorie extends AppCompatActivity {
     int squats_progress=0;
     int total_count=0;
     int max, min =0;
+    String id;
+    int mypoint = 0;
+    MediaPlayer mediaPlayer;
+    private DatabaseReference mDatabase;
+
+    public void onBackPressed() {
+        //super.onBackPressed();
+        // firebase - query point and clothes and set textView
+         mDatabase = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
+
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +96,18 @@ public class Calorie extends AppCompatActivity {
         stopButton.setOnClickListener(onClickListener);
         restartButton.setOnClickListener(onClickListener);
 
-        //Intent intent = getIntent();
         Intent intent = getIntent();
         max =  intent.getIntExtra("max", 1);
         min =  intent.getIntExtra("min", 1);
+        id = intent.getExtras().getString("id");
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
         acceleration = 0.0f;
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(stepDetector, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
 
         progressBar = findViewById(R.id.progress_bar);
         progressText= findViewById(R.id.progress_text);
@@ -145,12 +166,52 @@ public class Calorie extends AppCompatActivity {
                         previousZ = currentZ;
                     }
                     else if (flag == 1 && currentZ < min) {
-                        Toast.makeText(Calorie.this, "min: "+min, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Calorie.this, "min: "+min, Toast.LENGTH_SHORT).show();
                         flag = 0;
                         squats++;
                         total_count++;
                         count.setText(String.valueOf(total_count));
-
+                        //이렇게 무식하게 짜야하는 것인가,,,??
+                        if(squats %10 ==1) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music1);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 2) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music2);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 3) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music3);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 4) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music4);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 5) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music5);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 6) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music6);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 7) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music7);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 8) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music8);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 9) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music9);
+                            mediaPlayer.start();
+                        }
+                        else if (squats %10 == 0) {
+                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music0);
+                            mediaPlayer.start();
+                        }
                         if (squats_progress <= 100) {
                             progressText.setText(String.valueOf(squats));
                             if (squats == goal) {

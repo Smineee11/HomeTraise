@@ -9,6 +9,7 @@ public class CharacterData {
     public int clothes;
 
     public CharacterData() {
+
     }
 
     public CharacterData(String name, int point, int clothes) {
