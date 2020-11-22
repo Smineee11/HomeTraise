@@ -137,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
        switch (item.getItemId()){
-           case R.id.logout:
-               Toast.makeText(this, "My Info", Toast.LENGTH_SHORT).show();
+           case R.id.myinfo:
+               Intent info_intent = new Intent(this, ChangeMyInfo.class);
+               info_intent.putExtra("info","1");
+               startActivity(info_intent);
                return true;
 
            case R.id.myaccount:
