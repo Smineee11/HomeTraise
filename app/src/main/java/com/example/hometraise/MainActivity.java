@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     void googleSignIn() {   // 구글로 로그인
+        Log.i("GoogleSign", "googleSignIn()");
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_SIGN_GOOGLE);
     }
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         else if(requestCode == REQ_SIGN_GOOGLE) {   // 구글 계정으로 로그인할 때
+            Log.i("GoogleSign", "onActivityResult()");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
                 Log.i("GoogleSign", "auth Success");
