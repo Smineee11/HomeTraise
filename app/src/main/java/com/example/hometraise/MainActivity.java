@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     void googleLink() { // 로그인 한 후 구글 Link 누르면
+        Log.i("GoogleLink", "googleLink()");
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_LINK_GOOGLE);
     }
@@ -169,9 +170,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {  // 구글 인증 요청했을 때 결과값 받는 곳
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_LINK_GOOGLE) {    // 구글 계정 등록할 때
+            Log.i("GoogleLink", "onActivityResult()");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
-                Log.i("Google Link", "auth Success");
+                Log.i("GoogleLink", "auth Success");
                 GoogleSignInAccount account = result.getSignInAccount();    // 구글 로그인 정보 담고있음
                 handleLinkGoogle(account);
             }
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         else if(requestCode == REQ_SIGN_GOOGLE) {   // 구글 계정으로 로그인할 때
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
-                Log.i("Google Sign", "auth Success");
+                Log.i("GoogleSign", "auth Success");
                 GoogleSignInAccount account = result.getSignInAccount();    // 구글 로그인 정보 담고있음
                 handleSignGoogle(account);
             }
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void handleLinkGoogle(final GoogleSignInAccount account) {    // 구글 계정 연결하기 (로그인 되어 있을 때)
+        Log.i("GoogleLink", "handleLinkGoogle");
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
