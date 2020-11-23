@@ -119,6 +119,11 @@ public class signUp extends AppCompatActivity {
                     Map<String, Object> childData_char = data_char.toMap();
                     dbRef.child("Characters").child(id).setValue(childData_char);
 
+                    // Closet에 데이터 삽입
+                    ClosetData data_closet = new ClosetData();
+                    Map<String, Object> childData_closet = data_closet.toMap();
+                    dbRef.child("Closet").child(id).setValue(childData_closet);
+
                     SharedPreferences pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("id", id);
