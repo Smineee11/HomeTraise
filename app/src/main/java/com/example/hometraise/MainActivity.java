@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 if(account == null)
                     googleLink();
                 else
-                    Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Already Completed", Toast.LENGTH_SHORT).show();
 
                 return true;
             default:
