@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) { // 로그인 성공
-                            String email = account.getEmail();
-                            final String googleId = email.split("@")[0];
-                            Log.i("GoogleLink", "Signin Success : " + email);
+                            String google = account.getId();
+                            final String googleId = google.split("@")[0];
+                            Log.i("GoogleLink", "Signin Success : " + account.getEmail() + " / " + googleId);
 
                             final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
@@ -249,11 +249,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) { // 로그인 성공
-                            String email = account.getEmail();
-                            email = email.split("@")[0];
-                            Log.i("GoogleSign", "Signin Success : " + email);
+                            String googleId = account.getId();
+                            googleId = googleId.split("@")[0];
+                            Log.i("GoogleSign", "SignIn Success : " + account.getEmail() + " / " + googleId);
 
-                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google").child(email);
+                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google").child(googleId);
 
                             dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
