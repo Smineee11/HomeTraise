@@ -77,11 +77,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             nametext.setText("");
             startButton.setText("Sign in");
 
-            startButton.setOnClickListener(new View.OnClickListener() { // 구글 계정 연동 버튼
+            startButton.setOnClickListener(new View.OnClickListener() { // 구글 계정으로 로그인
                 @Override
                 public void onClick(View v) {
                     setGoogleSettings();
                     googleSignIn();
+                }
+            });
+
+            makenewButton.setOnClickListener(new View.OnClickListener() {   // 회원가입
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), signUp.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -109,15 +117,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             });
 
+            makenewButton.setOnClickListener(new View.OnClickListener() {   // 회원가입
+                @Override
+                public void onClick(View v) {
+                    // 팝업창 : 구글 계정과 연동하지 않았을 시 기존 데이터가 지워질 수 있습니다. 계속하시겠습니까? 예 / 취소
+
+                    Intent intent;
+                    //예
+                    /*
+                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                    if(account == null)   // 구글 연동 안되었으면 데이터 삭제
+                        removeData(id);
+
+                    intent = new Intent(getApplicationContext(), signUp.class);
+                    startActivity(intent);
+                    */
+
+                    // 아니오
+                    intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
         }
 
-        makenewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), signUp.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     void setGoogleSettings() {
@@ -176,17 +200,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             final String googleId = email.split("@")[0];
                             Log.i("GoogleLink", "Signin Success : " + email);
 
-                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google");
+                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
-                            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            dbRef.child("Google").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.hasChild(googleId)) {
-                                        // 팝업창: 계정에 연결되어있는 데이터가 있는데 괜찮으시겠습니까? 예/아니오
-                                        Toast.makeText(MainActivity.this, "계정에 연결되어있는 데이터가 있습니다.", Toast.LENGTH_SHORT).show();
+                                        // 팝업창: 계정에 연결되어있는 데이터가 있습니다. 데이터가 삭제되어도 괜찮으시겠습니까? 예/취소
+                                        // 예
+                                        /*
+                                        String pastId = snapshot.child(googleId).getValue().toString();
+                                        removeData(pastId);
+                                        dbRef.child("Google").child(googleId).setValue(id);
+                                        Toast.makeText(MainActivity.this, "Link Completed", Toast.LENGTH_SHORT).show();
+                                        */
+
+                                        // 아니오
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
                                     }
                                     else {
-                                        dbRef.child(googleId).setValue(id);
+                                        dbRef.child("Google").child(googleId).setValue(id);
+                                        Toast.makeText(MainActivity.this, "Link Completed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -305,6 +341,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    void removeData(String removeId) {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+
+        dbRef.child("Users").child(removeId).removeValue();
+        dbRef.child("Characters").child(removeId).removeValue();
+        dbRef.child("Closet").child(removeId).removeValue();
     }
 
     //인텐트 처리
