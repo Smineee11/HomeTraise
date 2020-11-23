@@ -14,10 +14,10 @@
         android:background="#fff">
 
         <Button
-            android:id="@+id/closet_button"
+            android:id="@+id/closet_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="closet"
+            android:text="back"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:textSize="35sp"
@@ -26,35 +26,19 @@
 
         </Button>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/closet_change"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:text="CHANGE"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="#ffffff">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text = "Point"
-                android:textSize = "20dp"
-                android:gravity="center"
-                android:layout_weight="0.8"
-                android:textColor="#000000"
-                />
+        </Button>
 
-            <TextView
-                android:id="@+id/store_point"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text = "xx pt"
-                android:textSize = "30dp"
-                android:gravity="center"
-                android:layout_weight="0.4"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -65,7 +49,7 @@
         >
 
         <ImageView
-            android:id="@+id/store_image"
+            android:id="@+id/closet_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"

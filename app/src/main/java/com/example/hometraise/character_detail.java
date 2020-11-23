@@ -31,6 +31,7 @@ public class character_detail extends AppCompatActivity {
         setContentView(R.layout.characterdetail);
         Intent it = getIntent();
         id = it.getExtras().getString("id");    // id를 mainActivity에서 전달받음
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         // firebase - query point and clothes and set textView
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
@@ -70,6 +71,7 @@ public class character_detail extends AppCompatActivity {
 
         Intent it = new Intent(this, Store.class);
         it.putExtra("it_tag", tag);
+        it.putExtra("id", id);
         startActivity(it);
     }
 
@@ -81,6 +83,7 @@ public class character_detail extends AppCompatActivity {
         Toast.makeText(this, tag, Toast.LENGTH_LONG);
         Intent it = new Intent(this, grid.class);
         it.putExtra("it_tag", tag);
+        it.putExtra("id", this.id);
         startActivity(it);
     }
 }
