@@ -72,6 +72,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
         id = pref.getString("id", null);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        auth = FirebaseAuth.getInstance();
+
         if(id == null) {    // do not have id
             idtext.setText("");
             nametext.setText("");
@@ -80,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             startButton.setOnClickListener(new View.OnClickListener() { // 구글 계정으로 로그인
                 @Override
                 public void onClick(View v) {
-                    setGoogleSettings();
                     googleSignIn();
                 }
             });
@@ -144,20 +155,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
-    void setGoogleSettings() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-        auth = FirebaseAuth.getInstance();
-    }
-
     void googleLink() { // 로그인 한 후 구글 Link 누르면
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_LINK_GOOGLE);
@@ -183,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         else if(requestCode == REQ_SIGN_GOOGLE) {   // 구글 계정으로 로그인할 때
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
+                Log.i("Google Sign", "auth Success");
                 GoogleSignInAccount account = result.getSignInAccount();    // 구글 로그인 정보 담고있음
                 handleSignGoogle(account);
             }
@@ -330,10 +328,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             case R.id.myaccount:
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-                if(account == null) {
-                    setGoogleSettings();
+                if(account == null)
                     googleLink();
-                }
                 else
                     Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
 
