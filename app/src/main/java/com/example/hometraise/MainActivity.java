@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
         id = pref.getString("id", null);
 
-        setGoogleSettings();
-
         if(id == null) {    // do not have id
             idtext.setText("");
             nametext.setText("");
@@ -82,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             startButton.setOnClickListener(new View.OnClickListener() { // 구글 계정 연동 버튼
                 @Override
                 public void onClick(View v) {
+                    setGoogleSettings();
                     googleSignIn();
                 }
             });
@@ -174,11 +173,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) { // 로그인 성공
                             String email = account.getEmail();
-                            email = email.split("@")[0];
-                            Log.i("GoogleLink", "Signin Success : "+email);
+                            final String googleId = email.split("@")[0];
+                            Log.i("GoogleLink", "Signin Success : " + email);
 
                             final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google");
-                            dbRef.child(email).setValue(id);
+
+                            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.hasChild(googleId)) {
+                                        // 팝업창: 계정에 연결되어있는 데이터가 있는데 괜찮으시겠습니까? 예/아니오
+                                        Toast.makeText(MainActivity.this, "계정에 연결되어있는 데이터가 있습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        dbRef.child(googleId).setValue(id);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("The read failed: ", error.getMessage());
+                                }
+                            });
                         }
 
                         else    // 로그인 실패
@@ -278,8 +294,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             case R.id.myaccount:
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-                if(account == null)
+                if(account == null) {
+                    setGoogleSettings();
                     googleLink();
+                }
                 else
                     Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
 
