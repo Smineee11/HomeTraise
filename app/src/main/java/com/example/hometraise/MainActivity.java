@@ -264,24 +264,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       switch (item.getItemId()){
-           case R.id.logout:
-               Toast.makeText(this, "My Info", Toast.LENGTH_SHORT).show();
-               return true;
 
-           case R.id.myaccount:
-               GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-               if(account == null)
-                   googleLink();
-               else
-                   Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
+        SharedPreferences pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        final String id = pref.getString("id", null);
 
-               return true;
-           default:
-               return super.onOptionsItemSelected(item);
-       }
+        switch (item.getItemId()){
+            case R.id.myinfo:
+                Intent info_intent = new Intent(this, ChangeMyInfo.class);
+                info_intent.putExtra("info_id",id);
+                startActivity(info_intent);
+                return true;
+
+            case R.id.myaccount:
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                if(account == null)
+                    googleLink();
+                else
+                    Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     //인텐트 처리
