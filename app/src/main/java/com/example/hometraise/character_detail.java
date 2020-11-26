@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +30,7 @@ public class character_detail extends AppCompatActivity {
         setContentView(R.layout.characterdetail);
         Intent it = getIntent();
         id = it.getExtras().getString("id");    // id를 mainActivity에서 전달받음
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         // firebase - query point and clothes and set textView
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
@@ -61,10 +60,10 @@ public class character_detail extends AppCompatActivity {
     }
 
     public void clickExercise(View v){
-        Toast.makeText(this,"운동클릭", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"운동클릭", Toast.LENGTH_SHORT).show();
     }
     public void clickShop(View v){
-        Toast.makeText(this,"상점클릭", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"상점클릭", Toast.LENGTH_SHORT).show();
         int id = v.getId();
         Button button = (Button)v.findViewById(id);
         String tag = (String)button.getTag();
@@ -80,7 +79,7 @@ public class character_detail extends AppCompatActivity {
         Button button= (Button)v.findViewById(id);
         String tag = (String)button.getTag();
 
-        Toast.makeText(this, tag, Toast.LENGTH_LONG);
+//        Toast.makeText(this, tag, Toast.LENGTH_LONG);
         Intent it = new Intent(this, grid.class);
         it.putExtra("it_tag", tag);
         it.putExtra("id", this.id);

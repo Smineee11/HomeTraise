@@ -1,7 +1,6 @@
 package com.example.hometraise;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,7 +41,7 @@ public class Closet extends AppCompatActivity {
                 String selectedName = names[position];
                 int selectedImage = images[position];
 
-                Toast.makeText(Closet.this, " " +position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Closet.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     //옷장에서 1번 옷을 고르고 change를 누르면 옷 변화
 

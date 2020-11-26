@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,7 +37,7 @@ public class Store extends AppCompatActivity {
                 String selectedName = names[position];
                 int selectedImage = images[position];
 
-                Toast.makeText(Store.this, " " +position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Store.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     Intent intent = new Intent(Store.this, Purchase.class);
                     intent.putExtra("name", selectedName);
