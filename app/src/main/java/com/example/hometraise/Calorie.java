@@ -18,15 +18,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -37,9 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.util.Map;
-
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -170,7 +162,7 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         max =  intent.getIntExtra("max", 1);
         min =  intent.getIntExtra("min", 1);
         id = intent.getExtras().getString("id");
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
@@ -229,7 +221,7 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
 
                     if (flag == 0 && currentZ > max) {
                         // 1/2 이벤트발생!!
-                        Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
                         flag++;
                         previousZ = currentZ;
                     }
