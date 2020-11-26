@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,7 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
     int squats_progress=0;
     int total_count=0;
     int max, min =0;
+    int index=0;
     String id;
     int mypoint = 0;
     private MediaPlayer mediaPlayer;
@@ -162,7 +164,9 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         max =  intent.getIntExtra("max", 1);
         min =  intent.getIntExtra("min", 1);
         id = intent.getExtras().getString("id");
-        //Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        index= intent.getIntExtra("index", 0);
+
+
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
@@ -215,13 +219,21 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
 
             if (status == RUN) {
                 if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
-                    float z = event.values[2];
-                    currentZ = z;
+//                Toast.makeText(Calorie.this, "index :"+ index, Toast.LENGTH_SHORT).show();
+                    if (index == 0) {
+                        float z = event.values[2];
+                        currentZ = z;
+//                        Toast.makeText(Calorie.this, "currentZ: "+ currentZ, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index ==1){
+                        float z = event.values[2];
+                        currentZ = z;
+//                        Toast.makeText(Calorie.this, "currentX: "+ currentZ, Toast.LENGTH_SHORT).show();
+                    }
 
                     if (flag == 0 && currentZ > max) {
                         // 1/2 이벤트발생!!
-//                        Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
+//                       Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
                         flag++;
                         previousZ = currentZ;
                     }

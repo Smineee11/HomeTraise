@@ -47,6 +47,7 @@ public class grid extends AppCompatActivity {
                     intent.putExtra("max", 14);
                     intent.putExtra("min", 7);
                     intent.putExtra("id", userid);
+                    intent.putExtra("index", 0);
                     startActivity(intent);
 
                 }
@@ -55,6 +56,7 @@ public class grid extends AppCompatActivity {
                     intent.putExtra("max", 9);
                     intent.putExtra("min", 6);
                     intent.putExtra("id", userid);
+                    intent.putExtra("index", 1);
                     startActivity(intent);
                 }
             }
