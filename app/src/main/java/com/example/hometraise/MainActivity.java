@@ -1,5 +1,6 @@
 package com.example.hometraise;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     SharedPreferences pref;
     androidx.appcompat.widget.Toolbar toolbar;
     String id;
+    public static Context CONTEXT;
+    public static int flag = 1;
 
     private FirebaseAuth auth;
     GoogleApiClient googleApiClient;
@@ -52,16 +55,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final int REQ_SIGN_GOOGLE = 200;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-    }
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        CONTEXT = this;
+
 
         idtext = (TextView)findViewById(R.id.main_myid);
         nametext = (TextView)findViewById(R.id.main_myname);
@@ -106,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         else {  // id exists
+
+
+
             toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
@@ -153,6 +158,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
 
+    }
+
+    @Override
+    public void onResume(){
+        //super.onBackPressed();
+        super.onResume();
+        if(flag == 2){
+            flag = 1;
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
     }
 
     void googleLink() { // 로그인 한 후 구글 Link 누르면
