@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,7 +31,7 @@ public class grid extends AppCompatActivity {
         gridView = findViewById(R.id.gridView);
         Intent it = getIntent();
         userid = it.getExtras().getString("id");
-        Toast.makeText(this, userid, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, userid, Toast.LENGTH_SHORT).show();
         CustomAdapter customAdapter = new CustomAdapter(names, images, this);
         gridView.setAdapter(customAdapter);
 
@@ -42,7 +41,7 @@ public class grid extends AppCompatActivity {
                 String selectedName = names[position];
                 int selectedImage = images[position];
 
-                Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(grid.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     Intent intent = new Intent(grid.this, Calorie.class);
                     intent.putExtra("max", 14);
