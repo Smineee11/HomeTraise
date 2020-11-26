@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import static com.example.hometraise.MainActivity.flag;
 
 public class ChangeMyInfo extends AppCompatActivity {
 
@@ -24,6 +25,13 @@ public class ChangeMyInfo extends AppCompatActivity {
     String age;
     String height;
     Double weight=0.0;
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        flag = 2;
+        finish();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,6 +128,8 @@ public class ChangeMyInfo extends AppCompatActivity {
 
             }
         });
+
+        ((MainActivity) MainActivity.CONTEXT).onResume();
 
     }
 

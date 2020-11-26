@@ -1,5 +1,6 @@
 package com.example.hometraise;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     SharedPreferences pref;
     androidx.appcompat.widget.Toolbar toolbar;
     String id;
+    public static Context CONTEXT;
+    public static int flag = 1;
 
     private FirebaseAuth auth;
     GoogleApiClient googleApiClient;
@@ -52,16 +55,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final int REQ_SIGN_GOOGLE = 200;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-    }
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        CONTEXT = this;
+
 
         idtext = (TextView)findViewById(R.id.main_myid);
         nametext = (TextView)findViewById(R.id.main_myname);
@@ -72,6 +74,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         pref = getSharedPreferences("app_preferences", MODE_PRIVATE);
         id = pref.getString("id", null);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        auth = FirebaseAuth.getInstance();
+
         if(id == null) {    // do not have id
             idtext.setText("");
             nametext.setText("");
@@ -80,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             startButton.setOnClickListener(new View.OnClickListener() { // 구글 계정으로 로그인
                 @Override
                 public void onClick(View v) {
-                    setGoogleSettings();
                     googleSignIn();
                 }
             });
@@ -95,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         else {  // id exists
+
+
+
             toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
@@ -144,26 +160,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
-    void setGoogleSettings() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-        auth = FirebaseAuth.getInstance();
+    @Override
+    public void onResume(){
+        //super.onBackPressed();
+        super.onResume();
+        if(flag == 2){
+            flag = 1;
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
     }
 
     void googleLink() { // 로그인 한 후 구글 Link 누르면
+        Log.i("GoogleLink", "googleLink()");
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_LINK_GOOGLE);
     }
 
     void googleSignIn() {   // 구글로 로그인
+        Log.i("GoogleSign", "googleSignIn()");
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_SIGN_GOOGLE);
     }
@@ -172,17 +188,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {  // 구글 인증 요청했을 때 결과값 받는 곳
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_LINK_GOOGLE) {    // 구글 계정 등록할 때
+            Log.i("GoogleLink", "onActivityResult()");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
-                Log.i("Google Link", "auth Success");
+                Log.i("GoogleLink", "auth Success");
                 GoogleSignInAccount account = result.getSignInAccount();    // 구글 로그인 정보 담고있음
                 handleLinkGoogle(account);
             }
         }
 
         else if(requestCode == REQ_SIGN_GOOGLE) {   // 구글 계정으로 로그인할 때
+            Log.i("GoogleSign", "onActivityResult()");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {    // 인증 결과가 성공적이면
+                Log.i("GoogleSign", "auth Success");
                 GoogleSignInAccount account = result.getSignInAccount();    // 구글 로그인 정보 담고있음
                 handleSignGoogle(account);
             }
@@ -190,15 +209,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void handleLinkGoogle(final GoogleSignInAccount account) {    // 구글 계정 연결하기 (로그인 되어 있을 때)
+        Log.i("GoogleLink", "handleLinkGoogle");
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) { // 로그인 성공
-                            String email = account.getEmail();
-                            final String googleId = email.split("@")[0];
-                            Log.i("GoogleLink", "Signin Success : " + email);
+                            String google = account.getId();
+                            final String googleId = google.split("@")[0];
+                            Log.i("GoogleLink", "Signin Success : " + account.getEmail() + " / " + googleId);
 
                             final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
@@ -246,11 +266,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) { // 로그인 성공
-                            String email = account.getEmail();
-                            email = email.split("@")[0];
-                            Log.i("GoogleSign", "Signin Success : " + email);
+                            String googleId = account.getId();
+                            googleId = googleId.split("@")[0];
+                            Log.i("GoogleSign", "SignIn Success : " + account.getEmail() + " / " + googleId);
 
-                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google").child(email);
+                            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Google").child(googleId);
 
                             dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -330,12 +350,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             case R.id.myaccount:
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-                if(account == null) {
-                    setGoogleSettings();
+                if(account == null)
                     googleLink();
-                }
                 else
-                    Toast.makeText(this, "Link Completed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Already Completed", Toast.LENGTH_SHORT).show();
 
                 return true;
             default:
