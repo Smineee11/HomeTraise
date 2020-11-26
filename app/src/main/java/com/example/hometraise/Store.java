@@ -20,8 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Store extends AppCompatActivity {
     GridView gridview;
     Button closet;
-    String[] names = {"c_basic","basic_2"};
-    int[] images = new int[]{R.drawable.c_basic, R.drawable.ic_launcher_background };
+    String[] names = {"c_basic","c_halloween"};
+    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -59,7 +59,7 @@ public class Closet extends AppCompatActivity {
     public void backshop(View v){
         finish();
     }
-    
+
 
     public class CustomAdapter3 extends BaseAdapter {
         private String[] imageNames;

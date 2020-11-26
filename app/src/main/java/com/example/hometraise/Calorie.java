@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -112,10 +114,21 @@ public class Calorie extends AppCompatActivity {
                 Log.e("The read failed: ", error.getMessage());
             }
         });
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
+        mediaPlayer.release();
 
+       finish();
 
-        finish();
     }
+  
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,14 +224,17 @@ public class Calorie extends AppCompatActivity {
                         if(squats %10 ==1) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music1);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 2) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music2);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 3) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music3);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 4) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music4);
@@ -227,27 +243,35 @@ public class Calorie extends AppCompatActivity {
                         else if (squats %10 == 5) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music5);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 6) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music6);
+                            mediaPlayer= MediaPlayer.create(Calorie.this, R.raw.music6);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 7) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music7);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 8) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music8);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 9) {
                             mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music9);
                             mediaPlayer.start();
+
                         }
                         else if (squats %10 == 0) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music0);
+                            mediaPlayer= MediaPlayer.create(Calorie.this, R.raw.music0);
                             mediaPlayer.start();
+
                         }
+
+
                         if (squats_progress <= 100) {
                             progressText.setText(String.valueOf(squats));
                             if (squats == goal) {
