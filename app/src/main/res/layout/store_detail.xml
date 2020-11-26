@@ -22,7 +22,8 @@
             android:layout_gravity="center_vertical"
             android:textSize="35sp"
             android:textStyle="bold"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:onClick="clickCloset">
 
         </Button>
 

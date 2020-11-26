@@ -56,7 +56,10 @@ public class Store extends AppCompatActivity {
             }
         });
     }
-
+    public void clickCloset (View v){
+        Intent it = new Intent(this, Closet.class);
+        startActivity(it);
+    }
     public class CustomAdapter2 extends BaseAdapter {
         private String[] imageNames;
         private  int[] imagePhoto;
