@@ -1,11 +1,14 @@
 package com.example.hometraise;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,9 +20,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,16 +32,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.Map;
 
 
-public class Calorie extends AppCompatActivity {
+
+public class Calorie extends AppCompatActivity implements SensorEventListener {
     private TextView timer, calorie;
     private Button stopButton, restartButton;
     private Context context;
 
     //임의로 설정해둔 칼로리 계산 변수
-   private double kg = 55;
+    private double kg = 55;
     private double MET = 8;
 
     public static final int INIT = 0;   //처음
@@ -50,6 +57,7 @@ public class Calorie extends AppCompatActivity {
     private TextView count;
     private TextView goaltext;
     private SensorManager sensorManager;
+    private Sensor stepDetector;
     private float acceleration;
     private float previousZ, currentZ;
     private int  squats=0;
@@ -64,15 +72,15 @@ public class Calorie extends AppCompatActivity {
     int squats_progress=0;
     int total_count=0;
     int max, min =0;
+    int index=0;
     String id;
     int mypoint = 0;
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
     private DatabaseReference mDatabase;
 
-
-
     public void onBackPressed() {
-        //super.onBackPressed();
+//        super.onBackPressed();
+//        super.onStop();
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -82,7 +90,7 @@ public class Calorie extends AppCompatActivity {
                 Log.d("NAME ", data.name);
                 Log.d("POINT ", String.valueOf(data.point));
 
-                if(data == null)
+                if (data == null)
                     System.out.println("Undefined user");
 
                 else {
@@ -105,9 +113,30 @@ public class Calorie extends AppCompatActivity {
             }
         });
 
+        mediaPlayer.release();
 
         finish();
+//        Activity act;
+//        act = Calorie.this;
+//
+//        ActivityCompat.finishAffinity(act);
+
+//        android.os.Process.killProcess(android.os.Process.myPid());
+
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this, stepDetector, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +144,8 @@ public class Calorie extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.exercise_detail);
+
+        mediaPlayer = new MediaPlayer();
 
         timer = (TextView)findViewById(R.id.time);
         stopButton = (Button)findViewById(R.id.stop);
@@ -125,17 +156,24 @@ public class Calorie extends AppCompatActivity {
         stopButton.setOnClickListener(onClickListener);
         restartButton.setOnClickListener(onClickListener);
 
+//        mediaPlayer.reset();
+//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//        mediaPlayer.setOnCompletionListener(mediaOnComp);
+
         Intent intent = getIntent();
         max =  intent.getIntExtra("max", 1);
         min =  intent.getIntExtra("min", 1);
         id = intent.getExtras().getString("id");
-        //Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        index= intent.getIntExtra("index", 0);
+
+
         this.context = context;
         count = (TextView) findViewById(R.id.count);
         previousZ = currentZ = squats = 0;
         acceleration = 0.0f;
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorManager.registerListener(stepDetector, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        sensorManager.registerListener(stepDetector, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 
         progressBar = findViewById(R.id.progress_bar);
         progressText= findViewById(R.id.progress_text);
@@ -176,20 +214,26 @@ public class Calorie extends AppCompatActivity {
         }
     };
 
-    private SensorEventListener stepDetector = new SensorEventListener() {
 
-        @Override
         public void onSensorChanged(SensorEvent event) {
 
             if (status == RUN) {
                 if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
-                    float z = event.values[2];
-                    currentZ = z;
+//                Toast.makeText(Calorie.this, "index :"+ index, Toast.LENGTH_SHORT).show();
+                    if (index == 0) {
+                        float z = event.values[2];
+                        currentZ = z;
+//                        Toast.makeText(Calorie.this, "currentZ: "+ currentZ, Toast.LENGTH_SHORT).show();
+                    }
+                    else if(index ==1){
+                        float z = event.values[2];
+                        currentZ = z;
+//                        Toast.makeText(Calorie.this, "currentX: "+ currentZ, Toast.LENGTH_SHORT).show();
+                    }
 
                     if (flag == 0 && currentZ > max) {
                         // 1/2 이벤트발생!!
-//                        Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
+//                       Toast.makeText(Calorie.this, "max: "+max, Toast.LENGTH_SHORT).show();
                         flag++;
                         previousZ = currentZ;
                     }
@@ -201,44 +245,34 @@ public class Calorie extends AppCompatActivity {
                         count.setText(String.valueOf(total_count));
                         //이렇게 무식하게 짜야하는 것인가,,,??
                         if(squats %10 ==1) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music1);
-                            mediaPlayer.start();
+                            playSound(R.raw.music1);
                         }
                         else if (squats %10 == 2) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music2);
-                            mediaPlayer.start();
+                            playSound(R.raw.music2);
                         }
                         else if (squats %10 == 3) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music3);
-                            mediaPlayer.start();
+                            playSound(R.raw.music3);
                         }
                         else if (squats %10 == 4) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music4);
-                            mediaPlayer.start();
+                            playSound(R.raw.music4);
                         }
                         else if (squats %10 == 5) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music5);
-                            mediaPlayer.start();
+                            playSound(R.raw.music5);
                         }
                         else if (squats %10 == 6) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music6);
-                            mediaPlayer.start();
+                            playSound(R.raw.music6);
                         }
                         else if (squats %10 == 7) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music7);
-                            mediaPlayer.start();
+                            playSound(R.raw.music7);
                         }
                         else if (squats %10 == 8) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music8);
-                            mediaPlayer.start();
+                            playSound(R.raw.music8);
                         }
                         else if (squats %10 == 9) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music9);
-                            mediaPlayer.start();
+                            playSound(R.raw.music9);
                         }
                         else if (squats %10 == 0) {
-                            mediaPlayer = MediaPlayer.create(Calorie.this, R.raw.music0);
-                            mediaPlayer.start();
+                            playSound(R.raw.music0);
                         }
                         if (squats_progress <= 100) {
                             progressText.setText(String.valueOf(squats));
@@ -265,7 +299,18 @@ public class Calorie extends AppCompatActivity {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
         }
-    };
+
+    private void playSound(int soundID){
+        mediaPlayer.reset();
+        AssetFileDescriptor sound = getResources().openRawResourceFd(soundID);
+        try {
+            mediaPlayer.setDataSource(sound.getFileDescriptor(),sound.getStartOffset(),sound.getLength());
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
+    }
 
     private void staButton(){
         switch (status){
@@ -321,6 +366,8 @@ public class Calorie extends AppCompatActivity {
         squats_progress = 0;
 
         status = INIT;
+
+        mediaPlayer.reset();
 
         CustomDialog dialog = new CustomDialog(this);
         dialog.show();
