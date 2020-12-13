@@ -70,7 +70,7 @@ public class character_detail extends AppCompatActivity {
 
         Intent it = new Intent(this, Store.class);
         it.putExtra("it_tag", tag);
-        it.putExtra("id", id);
+        it.putExtra("id", this.id);
         startActivity(it);
     }
 
