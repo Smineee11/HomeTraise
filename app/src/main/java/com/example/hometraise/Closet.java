@@ -12,7 +12,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
 public class Closet extends AppCompatActivity {
 
@@ -21,6 +25,8 @@ public class Closet extends AppCompatActivity {
     GridView gridview;
     String[] names = {"c_basic","basic_2"};
     int[] images = new int[]{R.drawable.c_basic, R.drawable.ic_launcher_background };
+    String selectedName;
+    int selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +44,17 @@ public class Closet extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedName = names[position];
-                int selectedImage = images[position];
+                selectedName = names[position];
+                selectedImage = images[position];
 
 //                Toast.makeText(Closet.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
                     //옷장에서 1번 옷을 고르고 change를 누르면 옷 변화
+                    picture.setImageResource(selectedImage);
 
                 }
                 else if(position == 1) {
-
+                    picture.setImageResource(selectedImage);
                 }
             }
         });
@@ -56,6 +63,16 @@ public class Closet extends AppCompatActivity {
 
     public void backshop(View v){
         finish();
+    }
+
+    public void changecliked(View v) {
+
+        if(selectedName == NULL){
+
+        }
+        else{
+
+        }
     }
 
 
