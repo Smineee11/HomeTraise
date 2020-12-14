@@ -98,6 +98,7 @@ public class Store extends AppCompatActivity {
     }
     public void clickCloset (View v){
         Intent it = new Intent(this, Closet.class);
+        it.putExtra("id", id);
         startActivity(it);
     }
     public class CustomAdapter2 extends BaseAdapter {
