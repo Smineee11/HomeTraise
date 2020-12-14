@@ -39,7 +39,7 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
     private Context context;
 
     //임의로 설정해둔 칼로리 계산 변수
-    private double kg = 55;
+    private double kg;
     private double MET = 8;
 
     public static final int INIT = 0;   //처음
@@ -141,6 +141,9 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.exercise_detail);
 
+
+
+
         mediaPlayer = new MediaPlayer();
 
         timer = (TextView)findViewById(R.id.time);
@@ -161,7 +164,19 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         min =  intent.getIntExtra("min", 1);
         id = intent.getExtras().getString("id");
         index= intent.getIntExtra("index", 0);
+        final DatabaseReference kgRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+        kgRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserData data1 = snapshot.getValue(UserData.class);
+                kg = data1.weight;
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("The read failed: ", error.getMessage());
+            }
+        });
 
         this.context = context;
         count = (TextView) findViewById(R.id.count);
