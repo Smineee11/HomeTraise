@@ -4,28 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClosetData {
-    String[] clothes = {"c_basic","c_halloween", "c_christmas"};
-    int[] YorN = {1, 0, 0};
-
-
-    public ClosetData() {
-       clothes[0] = "c_basic";
-       clothes[1] = "c_halloween";
-       clothes[2] = "c_christmas";
-       YorN[0]=1;
-       YorN[1]=0;
-       YorN[2]=0;
+    //String[] clothes = {"c_basic","c_halloween", "c_christmas"};
+    //int[] YorN = {1, 0, 0};
+    public int exercise; public int halloween; public int christmas;
+    public ClosetData(){
 
     }
-    public void addClothes(int index) {
-        YorN[index] = 1;
+    public ClosetData(int exercise, int halloween, int christmas) {
+        this.exercise= exercise;
+        this.halloween = halloween;
+        this.christmas = christmas;
     }
+//    public void addClothes(int index) {
+//        //YorN[index] = 1;
+//    }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("exercise", exercise);
+        result.put("halloween", halloween);
+        result.put("christmas", christmas);
 
-        for(int i=0; i<clothes.length; i++)
-            result.put(clothes[i], YorN[i]);
 
         return result;
     }

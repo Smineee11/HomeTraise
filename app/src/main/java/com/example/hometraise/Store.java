@@ -3,6 +3,7 @@ package com.example.hometraise;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,16 @@ public class Store extends AppCompatActivity {
                     TextView pointText = (TextView)findViewById(R.id.store_point);
                     pointText.setText(Integer.toString(data.point));
                     mypoint = data.point;
+                    ImageView imageView = (ImageView)findViewById(R.id.store_image);
+                    if (data.clothes ==0){
+                        imageView.setImageResource(R.drawable.c_basic);
+                    }
+                    else if (data.clothes ==1){
+                        imageView.setImageResource(R.drawable.c_halloween);
+                    }
+                    else if (data.clothes ==2){
+                        imageView.setImageResource(R.drawable.c_christmas);
+                    }
                 }
             }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,16 @@ public class character_detail extends AppCompatActivity {
                     nameText.setText(data.name);
                     TextView pointText = (TextView)findViewById(R.id.textview_point);
                     pointText.setText(Integer.toString(data.point));
+                    ImageView imageView = (ImageView)findViewById(R.id.imageView_character);
+                    if (data.clothes ==0){
+                        imageView.setImageResource(R.drawable.c_basic);
+                    }
+                    else if (data.clothes ==1){
+                        imageView.setImageResource(R.drawable.c_halloween);
+                    }
+                    else if (data.clothes ==2){
+                        imageView.setImageResource(R.drawable.c_christmas);
+                    }
                 }
             }
 

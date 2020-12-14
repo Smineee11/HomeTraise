@@ -120,7 +120,7 @@ public class signUp extends AppCompatActivity {
                     dbRef.child("Characters").child(id).setValue(childData_char);
 
                     // Closet에 데이터 삽입
-                    ClosetData data_closet = new ClosetData();
+                    ClosetData data_closet = new ClosetData(1, 0, 0);
                     Map<String, Object> childData_closet = data_closet.toMap();
                     dbRef.child("Closet").child(id).setValue(childData_closet);
 
