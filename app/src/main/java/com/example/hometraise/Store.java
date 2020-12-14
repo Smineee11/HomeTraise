@@ -27,8 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 public class Store extends AppCompatActivity {
     GridView gridview;
     Button closet;
-    String[] names = {"c_basic","c_halloween"};
-    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween};
+    String[] names = {"exercise","halloween", "christmas"};
+    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween, R.drawable.c_christmas};
     String id;
     int mypoint;
 
@@ -96,6 +96,14 @@ public class Store extends AppCompatActivity {
 
                 }
                 else if(position == 1) {
+                    Intent intent = new Intent(Store.this, Purchase.class);
+                    intent.putExtra("name", selectedName);
+                    intent.putExtra("image", selectedImage);
+                    intent.putExtra("id", id);
+                    intent.putExtra("point", mypoint);
+                    startActivity(intent);
+                }
+                else if(position == 2) {
                     Intent intent = new Intent(Store.this, Purchase.class);
                     intent.putExtra("name", selectedName);
                     intent.putExtra("image", selectedImage);
