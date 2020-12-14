@@ -1,6 +1,5 @@
 package com.example.hometraise;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -8,7 +7,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +18,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -401,12 +397,11 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         return recTime;
     }
 
-    private long getMinute(){
+    private double getMinute(){
         long nowTime = SystemClock.elapsedRealtime();
         long overTime = nowTime - baseTime;
 
-        long m = overTime/1000/60;
-
+        double m = overTime/1000;
         return m;
     }
 
@@ -415,8 +410,8 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         @Override
         public void handleMessage(@NonNull Message msg) {
             timer.setText((getTime()));
-            long minute = getMinute();
-            double result = 0.0175 * kg * MET * minute;
+            double sec = getMinute(); //초단위로 나옴
+            double result = 0.0175 * kg * MET * (sec/60);
             String cal = String.format("%.0f",result);
             calorie.setText(cal);
 
