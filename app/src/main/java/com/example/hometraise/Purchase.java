@@ -42,9 +42,9 @@ public class Purchase extends AppCompatActivity {
         picture = (ImageView)findViewById(R.id.purchase_image);
         mypoint = (TextView)findViewById(R.id.purchase_mypoint);
         Intent intent = getIntent();
+        id = intent.getExtras().getString("id");
+        point = intent.getExtras().getInt("point");
         if(intent.getExtras()!=null){
-            id = intent.getExtras().getString("id");
-            point = intent.getExtras().getInt("point");
             String selectedName  = intent.getStringExtra("name");
             int selectedImage = intent.getIntExtra("image", 0);
             picture.setImageResource(selectedImage);
@@ -57,13 +57,13 @@ public class Purchase extends AppCompatActivity {
         //Toast.makeText(this, "버튼 눌림", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         //if 구매 가능한 경우
-        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
 
         alertDialogBuilder.setTitle("구매 완료");
         alertDialogBuilder.setMessage("구매가 완료되었습니다. ");
         alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
                 dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,7 +76,6 @@ public class Purchase extends AppCompatActivity {
 
                         else {
                             data.point = data.point - 500;
-
                             Log.d("CHANGE ", String.valueOf(data.point));
                         }
 
