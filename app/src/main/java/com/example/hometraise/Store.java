@@ -26,8 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 public class Store extends AppCompatActivity {
     GridView gridview;
     Button closet;
-    String[] names = {"c_basic","c_halloween"};
-    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween};
+    String[] names = {"c_basic","c_halloween", "c_christmas"};
+    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween, R.drawable.c_christmas};
     String id;
 
     @Override
@@ -55,6 +55,13 @@ public class Store extends AppCompatActivity {
 
                 }
                 else if(position == 1) {
+                    Intent intent = new Intent(Store.this, Purchase.class);
+                    intent.putExtra("name", selectedName);
+                    intent.putExtra("image", selectedImage);
+                    startActivity(intent);
+                }
+
+                else if(position == 2) {
                     Intent intent = new Intent(Store.this, Purchase.class);
                     intent.putExtra("name", selectedName);
                     intent.putExtra("image", selectedImage);
@@ -90,6 +97,7 @@ public class Store extends AppCompatActivity {
     }
     public void clickCloset (View v){
         Intent it = new Intent(this, Closet.class);
+        it.putExtra("id", id);
         startActivity(it);
     }
     public class CustomAdapter2 extends BaseAdapter {

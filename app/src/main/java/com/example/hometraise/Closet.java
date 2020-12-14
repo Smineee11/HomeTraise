@@ -1,7 +1,9 @@
 package com.example.hometraise;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
@@ -23,10 +30,11 @@ public class Closet extends AppCompatActivity {
     Button back, change;
     ImageView picture;
     GridView gridview;
-    String[] names = {"c_basic","basic_2"};
-    int[] images = new int[]{R.drawable.c_basic, R.drawable.ic_launcher_background };
+    String[] names = {"c_basic","c_halloween", "c_christmas"};
+    int[] images = new int[]{R.drawable.c_basic, R.drawable.c_halloween, R.drawable.c_christmas };
     String selectedName;
     int selectedImage;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +45,39 @@ public class Closet extends AppCompatActivity {
         change = (Button)findViewById(R.id.closet_change);
         picture = (ImageView)findViewById(R.id.closet_image);
         gridview = findViewById(R.id.gridView);
-        //Intent it = getIntent();
+
+        //getFirebaseDatabase();
+
+        Intent it = getIntent();
+        id = it.getExtras().getString("id");
         Closet.CustomAdapter3 customAdapter = new CustomAdapter3(names, images, this);
         gridview.setAdapter(customAdapter);
+
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 selectedName = names[position];
                 selectedImage = images[position];
 
 //                Toast.makeText(Closet.this, " " +position, Toast.LENGTH_SHORT).show();
                 if(position == 0) {
-                    //옷장에서 1번 옷을 고르고 change를 누르면 옷 변화
                     picture.setImageResource(selectedImage);
 
                 }
                 else if(position == 1) {
                     picture.setImageResource(selectedImage);
                 }
+
+                else if(position == 2){
+                    picture.setImageResource(selectedImage);
+                }
             }
         });
     }
+
 
 
     public void backshop(View v){
@@ -104,17 +123,49 @@ public class Closet extends AppCompatActivity {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView =layoutInflater.inflate(R.layout.store_row_items, parent, false);
         }
 
-        TextView itemName = convertView.findViewById(R.id.itemName);
-        ImageView imageView  = convertView.findViewById(R.id.imageView);
+        final View finalConvertView = convertView;
+        final DatabaseReference dbRef;
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Closet").child(id);
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("getFirebaseDatabase", "count: " + snapshot.getChildrenCount());
 
 
-        itemName.setText(imageNames[position]);
-        imageView.setImageResource(imagePhoto[position]);
+                    ClosetData data = snapshot.getValue(ClosetData.class);
+                    if (data == null)
+                        System.out.println("Undefined user");
+
+                    else {
+                        for (int i = 0; i < 3; i++) {
+                            if (data.YorN[i] == 1) {
+                                TextView itemName = finalConvertView.findViewById(R.id.itemName);
+                                ImageView imageView = finalConvertView.findViewById(R.id.imageView);
+
+
+                                itemName.setText(imageNames[i]);
+                                imageView.setImageResource(imagePhoto[i]);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("The read failed: ", error.getMessage());
+            }
+
+        });
+
         return convertView;
     }
 
