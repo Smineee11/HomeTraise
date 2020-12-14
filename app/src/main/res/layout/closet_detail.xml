@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fff">
 
@@ -20,7 +20,8 @@
             android:text="back"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:textSize="35sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="35sp"
             android:textStyle="bold"
             android:background="#ffffff"
             android:onClick="backshop">
@@ -34,7 +35,8 @@
             android:text="CHANGE"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:textSize="35sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="35sp"
             android:textStyle="bold"
             android:background="#ffffff"
             android:onClick="changecliked">

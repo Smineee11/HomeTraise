@@ -32,6 +32,7 @@
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginRight="60dp"
+        android:textSize = "13dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/signUp_id"
         app:layout_constraintEnd_toEndOf="parent" />
 

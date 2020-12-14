@@ -26,6 +26,10 @@ public class ChangeMyInfo extends AppCompatActivity {
     String height;
     Double weight=0.0;
 
+    String characterName;
+    int characterPoint;
+    int characterClothes;
+
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
@@ -57,6 +61,7 @@ public class ChangeMyInfo extends AppCompatActivity {
 
 
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+        final DatabaseReference dbRef1 = FirebaseDatabase.getInstance().getReference().child("Characters").child(id);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,9 +80,22 @@ public class ChangeMyInfo extends AppCompatActivity {
             }
         });
 
+        dbRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                CharacterData characterData = snapshot.getValue(CharacterData.class);
+                characterName = characterData.name; characterPoint = characterData.point; characterClothes = characterData.clothes;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("The read failed: ", error.getMessage());
+            }
+        });
+
 
         final UserData myinfo_data = new UserData(name, age, height, weight);    // 삽입할 데이터
-        //
+        final CharacterData myinfo_character = new CharacterData(characterName,characterPoint,characterClothes);
 
         Button switch_button = (Button)findViewById(R.id.button_change);
 
@@ -108,7 +126,11 @@ public class ChangeMyInfo extends AppCompatActivity {
                     myinfo_data.age = ageEdit.getText().toString();
                     myinfo_data.height = heightEdit.getText().toString();
                     myinfo_data.weight = Double.parseDouble(weightEdit.getText().toString());
+
+                    myinfo_character.name = nameEdit.getText().toString();
+
                     dbRef.setValue(myinfo_data);
+                    dbRef1.setValue(myinfo_character);
 
                     nameEdit.setVisibility(View.GONE);
                     ageEdit.setVisibility(View.GONE);
