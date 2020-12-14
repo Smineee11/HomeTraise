@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fff">
 
@@ -26,7 +27,8 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:text="Would you like to buy \nnew character?"
-        android:textSize="30dp"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="30dp"
         android:textColor="#000"
         android:textStyle="bold"
         android:gravity="center">
@@ -44,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="PRICE: 500pt"
-            android:textSize="20sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="25sp"
             android:layout_weight="1"
             android:layout_marginLeft="20sp"
             android:textStyle="bold"
@@ -57,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="MY POINT:"
-            android:textSize="20sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="25sp"
             android:layout_weight="1"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -79,7 +83,8 @@
                 android:layout_weight="1"
                 android:text="purchase"
                 android:layout_gravity="center_vertical"
-                android:textSize="35sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="28dp"
                 android:textStyle="bold"
                 android:onClick="purchaseClicked"
                 android:background="#ffffff">
@@ -91,9 +96,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="cancle"
+                android:text="cancel"
                 android:layout_gravity="center_vertical"
-                android:textSize="35sp"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="28dp"
                 android:textStyle="bold"
                 android:onClick="cancelClicked"
                 android:background="#ffffff">

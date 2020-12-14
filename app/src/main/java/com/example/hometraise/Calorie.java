@@ -1,6 +1,5 @@
 package com.example.hometraise;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -8,7 +7,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +18,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,7 +39,7 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
     private Context context;
 
     //임의로 설정해둔 칼로리 계산 변수
-    private double kg = 55;
+    private double kg;
     private double MET = 8;
 
     public static final int INIT = 0;   //처음
@@ -145,6 +141,9 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.exercise_detail);
 
+
+
+
         mediaPlayer = new MediaPlayer();
 
         timer = (TextView)findViewById(R.id.time);
@@ -165,7 +164,19 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         min =  intent.getIntExtra("min", 1);
         id = intent.getExtras().getString("id");
         index= intent.getIntExtra("index", 0);
+        final DatabaseReference kgRef = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+        kgRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserData data1 = snapshot.getValue(UserData.class);
+                kg = data1.weight;
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("The read failed: ", error.getMessage());
+            }
+        });
 
         this.context = context;
         count = (TextView) findViewById(R.id.count);
@@ -401,12 +412,11 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         return recTime;
     }
 
-    private long getMinute(){
+    private double getMinute(){
         long nowTime = SystemClock.elapsedRealtime();
         long overTime = nowTime - baseTime;
 
-        long m = overTime/1000/60;
-
+        double m = overTime/1000;
         return m;
     }
 
@@ -415,8 +425,8 @@ public class Calorie extends AppCompatActivity implements SensorEventListener {
         @Override
         public void handleMessage(@NonNull Message msg) {
             timer.setText((getTime()));
-            long minute = getMinute();
-            double result = 0.0175 * kg * MET * minute;
+            double sec = getMinute(); //초단위로 나옴
+            double result = 0.0175 * kg * MET * (sec/60);
             String cal = String.format("%.0f",result);
             calorie.setText(cal);
 
