@@ -63,6 +63,7 @@ public class Closet extends AppCompatActivity {
         id = it.getExtras().getString("id");
         final DatabaseReference dbRef;
         final DatabaseReference dbRef2;
+
         dbRef = FirebaseDatabase.getInstance().getReference().child("Closet").child(id);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,23 +127,94 @@ public class Closet extends AppCompatActivity {
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id3) {
+                final DatabaseReference dbRef3;
+                dbRef3 = FirebaseDatabase.getInstance().getReference().child("Closet").child(id);
 
-                selectedName = names3[position];
-                selectedImage = images3[position];
+                dbRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("getFirebaseDatabase", "count: " + snapshot.getChildrenCount());
 
-                //Toast.makeText(Closet.this, " " +position, Toast.LENGTH_SHORT).show();
-                if(position == 0) {
-                    picture.setImageResource(selectedImage);
 
-                }
-                else if(position == 1) {
-                    picture.setImageResource(selectedImage);
-                }
+                        ClosetData data = snapshot.getValue(ClosetData.class);
 
-                else if(position == 2){
-                    picture.setImageResource(selectedImage);
-                }
+                        if (data == null)
+                            System.out.println("Undefined user");
+                        else {
+                            if (data.exercise == 1 && data.halloween == 0 && data.christmas == 0 ) { // 1 0 0일 때
+                                selectedName = names1[position];
+                                selectedImage = images1[position];
+
+                                if(position == 0) {
+                                    picture.setImageResource(selectedImage);
+
+                                }
+                                else if(position == 1) {
+                                    picture.setImageResource(selectedImage);
+                                }
+
+                                else if(position == 2){
+                                    picture.setImageResource(selectedImage);
+                                }
+                            } else if (data.exercise == 1 && data.halloween == 1 && data.christmas == 0 ) { // 1 1 0일때
+                                selectedName = names2[position];
+                                selectedImage = images2[position];
+
+                                if(position == 0) {
+                                    picture.setImageResource(selectedImage);
+
+                                }
+                                else if(position == 1) {
+                                    picture.setImageResource(selectedImage);
+                                }
+
+                                else if(position == 2){
+                                    picture.setImageResource(selectedImage);
+                                }
+                            } else if (data.exercise == 1 && data.halloween == 0 && data.christmas == 1 ) { //1 0 1일때
+                                selectedName = names2_1[position];
+                                selectedImage = images2_1[position];
+
+                                if(position == 0) {
+                                    picture.setImageResource(selectedImage);
+
+                                }
+                                else if(position == 1) {
+                                    picture.setImageResource(selectedImage);
+                                }
+
+                                else if(position == 2){
+                                    picture.setImageResource(selectedImage);
+                                }
+                            }else if (data.exercise == 1 && data.halloween == 1 && data.christmas == 1 ) { //1 1 1일때
+                                selectedName = names3[position];
+                                selectedImage = images3[position];
+
+                                if(position == 0) {
+                                    picture.setImageResource(selectedImage);
+
+                                }
+                                else if(position == 1) {
+                                    picture.setImageResource(selectedImage);
+                                }
+
+                                else if(position == 2){
+                                    picture.setImageResource(selectedImage);
+                                }
+                            }
+
+                        }
+
+
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("The read failed: ", error.getMessage());
+                    }
+                });
+
             }
         });
     }
